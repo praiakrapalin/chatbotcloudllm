@@ -3,18 +3,19 @@
    ทำให้ปรับโทนสีหรือความหนาแน่นของ UI ทีเดียวได้จากจุดเดียว และเห็นภาพรวมของ
    ดีไซน์ระบบง่ายกว่าไล่หาทีละ selector */
 :root {
-  --color-bg: #38bdf8;
-  --color-surface: #111827;
-  --color-surface-alt: #1e293b;
-  --color-border: #1f2937;
-  --color-border-strong: #334155;
-  --color-text: #e2e8f0;
-  --color-text-muted: #94a3b8;
-  --color-text-faint: #64748b;
-  --color-accent: #2563eb;
-  --color-accent-hover: #1d4ed8;
-  --color-danger: #b91c1c;
-  --color-danger-hover: #991b1b;
+  
+  --color-bg: #ffffff;              /* White */
+  --color-surface: #f8fafc;         /* Slate 50 */
+  --color-surface-alt: #f0f9ff;     /* Sky 50 */
+  --color-border: #e2e8f0;          /* Slate 200 */
+  --color-border-strong: #94a3b8;   /* Slate 400 */
+  --color-text: #0f172a;            /* Slate 900 */
+  --color-text-muted: #475569;      /* Slate 600 */
+  --color-text-faint: #94a3b8;      /* Slate 400 */
+  --color-accent: #2563eb;          /* Blue 600 */
+  --color-accent-hover: #1d4ed8;    /* Blue 700 */
+  --color-danger: #dc2626;          /* Red 600 */
+  --color-danger-hover: #b91c1c;    /* Red 700 */
 
   --radius-sm: 8px;
   --radius-md: 12px;
