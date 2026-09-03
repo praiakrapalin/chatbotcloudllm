@@ -3,7 +3,7 @@
    ทำให้ปรับโทนสีหรือความหนาแน่นของ UI ทีเดียวได้จากจุดเดียว และเห็นภาพรวมของ
    ดีไซน์ระบบง่ายกว่าไล่หาทีละ selector */
 :root {
-  --color-bg: #0f172a;
+  --color-bg: #38bdf8;
   --color-surface: #111827;
   --color-surface-alt: #1e293b;
   --color-border: #1f2937;
