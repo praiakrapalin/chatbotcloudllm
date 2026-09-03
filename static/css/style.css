@@ -5,17 +5,17 @@
 :root {
   
   --color-bg: #ffffff;              /* White */
-  --color-surface: #f8fafc;         /* Slate 50 */
-  --color-surface-alt: #f0f9ff;     /* Sky 50 */
-  --color-border: #e2e8f0;          /* Slate 200 */
-  --color-border-strong: #94a3b8;   /* Slate 400 */
-  --color-text: #0f172a;            /* Slate 900 */
-  --color-text-muted: #475569;      /* Slate 600 */
-  --color-text-faint: #94a3b8;      /* Slate 400 */
-  --color-accent: #2563eb;          /* Blue 600 */
-  --color-accent-hover: #1d4ed8;    /* Blue 700 */
-  --color-danger: #dc2626;          /* Red 600 */
-  --color-danger-hover: #b91c1c;    /* Red 700 */
+  --color-surface: #f7fbfc;         /* Very Light Cyan */
+  --color-surface-alt: #eaf8fb;     /* Light Nawavej Cyan */
+  --color-border: #d0d3d3;          /* Light Gray */
+  --color-border-strong: #a4a9ac;   /* Medium Gray */
+  --color-text: #12313a;            /* Deep Blue-Gray */
+  --color-text-muted: #526b73;      /* Muted Teal Gray */
+  --color-text-faint: #8b9ba0;      /* Soft Gray */
+  --color-accent: #00acc8;          /* Nawavej Cyan */
+  --color-accent-hover: #0089ab;    /* Deep Teal */
+  --color-danger: #ab0033;          /* Nawavej Burgundy Red */
+  --color-danger-hover: #850028;    /* Dark Burgundy */
 
   --radius-sm: 8px;
   --radius-md: 12px;
