@@ -1,0 +1,329 @@
+/* ---------- ตัวแปรกลาง ----------
+   รวมสี/ระยะห่าง/ความโค้งไว้ที่เดียว แทนที่จะกระจายค่าเป็นเลขดิบๆ ทั่วไฟล์
+   ทำให้ปรับโทนสีหรือความหนาแน่นของ UI ทีเดียวได้จากจุดเดียว และเห็นภาพรวมของ
+   ดีไซน์ระบบง่ายกว่าไล่หาทีละ selector */
+:root {
+  --color-bg: #0f172a;
+  --color-surface: #111827;
+  --color-surface-alt: #1e293b;
+  --color-border: #1f2937;
+  --color-border-strong: #334155;
+  --color-text: #e2e8f0;
+  --color-text-muted: #94a3b8;
+  --color-text-faint: #64748b;
+  --color-accent: #2563eb;
+  --color-accent-hover: #1d4ed8;
+  --color-danger: #b91c1c;
+  --color-danger-hover: #991b1b;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --space-sm: 8px;
+  --space-md: 16px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  /* Kanit ก่อน เพื่อให้ตรงกับฟอนต์หลักที่ใช้สอนเรื่อง UI/UX ในเลกเชอร์
+     Noto Sans Thai / Segoe UI เป็น fallback เผื่อโหลด Kanit จาก Google Fonts ไม่สำเร็จ */
+  font-family: "Kanit", "Noto Sans Thai", "Segoe UI", system-ui, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ---------- layout: เขียนแบบ mobile-first ----------
+   ค่าเริ่มต้น (ไม่มี media query) คือสไตล์สำหรับจอเล็ก/มือถือ
+   แล้วค่อยขยาย/ปรับเพิ่มให้จอใหญ่ขึ้นด้วย @media (min-width: ...) ด้านล่าง */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  margin: 0 auto;
+  background: var(--color-surface);
+}
+
+.app-header {
+  padding: 14px var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.app-header-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.app-subtitle {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.new-chat-button {
+  flex: 0 0 auto;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--color-border-strong);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-family: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.new-chat-button:hover {
+  background: var(--color-border);
+  border-color: var(--color-border-strong);
+  color: var(--color-text);
+}
+
+.chat-window {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ---------- empty state ----------
+   แสดงเฉพาะตอนที่ยังไม่มีบทสนทนาจริงเกิดขึ้นเลย ไม่ใช่ข้อความ AI ปลอมที่ค้างอยู่ถาวร
+   ถูกซ่อนทันทีที่ผู้ใช้ส่งข้อความแรก และถูกเรียกกลับมาแสดงอีกครั้งตอนกด "เริ่มใหม่" */
+.empty-state {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--color-text-faint);
+  font-size: 0.95rem;
+  padding: 24px;
+}
+
+.empty-state.hidden {
+  display: none;
+}
+
+.message {
+  display: flex;
+  max-width: 92%;
+}
+
+.message.user {
+  align-self: flex-end;
+  justify-content: flex-end;
+}
+
+.message.ai {
+  align-self: flex-start;
+}
+
+.bubble {
+  padding: 10px 14px;
+  border-radius: var(--radius-lg);
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.message.user .bubble {
+  background: var(--color-accent);
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.message.ai .bubble {
+  background: var(--color-border);
+  border-bottom-left-radius: 4px;
+}
+
+.bubble code {
+  background: rgba(0, 0, 0, 0.35);
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-family: "Cascadia Code", Consolas, monospace;
+  font-size: 0.9em;
+}
+
+.bubble pre {
+  background: rgba(0, 0, 0, 0.35);
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  overflow-x: auto;
+}
+
+.bubble pre code {
+  background: none;
+  padding: 0;
+}
+
+.bubble ul,
+.bubble ol {
+  margin: 6px 0;
+  padding-left: 22px;
+}
+
+.bubble strong {
+  color: #93c5fd;
+}
+
+/* เดิม #dbeafe ให้ contrast แค่ 4.24:1 บนพื้น var(--color-accent) (ต่ำกว่าเกณฑ์
+   WCAG AA 4.5:1 สำหรับตัวหนังสือขนาดปกติเล็กน้อย) ปรับให้สว่างขึ้นเป็น 4.79:1 */
+.message.user .bubble strong {
+  color: #f0f7ff;
+}
+
+.loading-indicator {
+  display: flex;
+  gap: 4px;
+  padding: 10px 14px;
+  align-self: flex-start;
+}
+
+.loading-indicator.hidden {
+  display: none;
+}
+
+.loading-indicator .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-text-faint);
+  animation: bounce 1.2s infinite ease-in-out;
+}
+
+.loading-indicator .dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.loading-indicator .dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes bounce {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  30% {
+    transform: translateY(-6px);
+    opacity: 1;
+  }
+}
+
+.error-banner {
+  margin: 0 var(--space-md) var(--space-sm);
+  padding: 10px 14px;
+  background: #7f1d1d;
+  color: #fecaca;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  transition: opacity 0.15s ease;
+}
+
+.error-banner.hidden {
+  display: none;
+}
+
+/* ตัวแปรสถานะ "แจ้งให้ทราบเฉยๆ" (เช่น กด "หยุด" การตอบเอง) แยกโทนจาก error จริง
+   ใช้ element เดียวกับ error-banner แค่สลับคลาส เพื่อไม่ต้องเพิ่ม DOM ซ้ำซ้อน */
+.error-banner.notice {
+  background: var(--color-surface-alt);
+  color: var(--color-text-muted);
+}
+
+.chat-form {
+  display: flex;
+  gap: var(--space-sm);
+  padding: 14px var(--space-md);
+  border-top: 1px solid var(--color-border);
+}
+
+.message-input {
+  flex: 1;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-surface-alt);
+  color: var(--color-text);
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border-color 0.15s ease;
+}
+
+.message-input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.send-button,
+.stop-button {
+  min-width: 76px;
+  padding: 0 var(--space-md);
+  border-radius: 10px;
+  border: none;
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease, opacity 0.15s ease;
+}
+
+.send-button {
+  background: var(--color-accent);
+  color: white;
+}
+
+.send-button:disabled {
+  background: var(--color-border-strong);
+  cursor: not-allowed;
+}
+
+.send-button:not(:disabled):hover {
+  background: var(--color-accent-hover);
+}
+
+.stop-button {
+  background: var(--color-danger);
+  color: white;
+}
+
+.stop-button:hover {
+  background: var(--color-danger-hover);
+}
+
+.stop-button.hidden,
+.send-button.hidden {
+  display: none;
+}
+
+/* ---------- จอที่ใหญ่ขึ้น (แท็บเล็ต/เดสก์ท็อป) ---------- */
+@media (min-width: 600px) {
+  .app-container {
+    max-width: 720px;
+  }
+
+  .message {
+    max-width: 85%;
+  }
+}
